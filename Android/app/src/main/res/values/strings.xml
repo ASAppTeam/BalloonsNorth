@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">"בלוני הצפון"</string>
+    <string name="weekSpecials">מבצעי\nהשבוע</string>
+    <string name="about">קצת\nעלינו</string>
+    <string name="packages">חבילות</string>
+    <string name="ourProducts">המוצרים\nשלנו</string>
+    <string name="friendsRecommend">חברים\nממליצים</string>
+    <string name="portfolio">עבודות \nשלנו</string>
+    <string name="callUs">לחץ להתקשר</string>
+    <string name="facebook">Facebook</string>
+    <string name="splashScreen">splashScreen</string>
+</resources>

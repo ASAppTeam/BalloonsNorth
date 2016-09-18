@@ -1,0 +1,14 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+
+    <!--> Menu Screen values - Start<-->
+    <dimen name="activity_horizontal_margin">2dp</dimen>
+    <dimen name="activity_vertical_margin">2dp</dimen>
+    <dimen name="action_bar_text">25dp</dimen>
+    <dimen name="menuButtonsMarginStart">5dp</dimen>
+    <dimen name="menuButtonsMarginEnd">5dp</dimen>
+    <dimen name="menuLinearMargin">5dp</dimen>
+    <!--> Menu Screen values - End<-->
+
+
+</resources>

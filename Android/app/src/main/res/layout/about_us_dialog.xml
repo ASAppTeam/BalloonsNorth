@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/backgroundColor"
+              android:orientation="vertical"
+              android:weightSum="24">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="10"
+        android:background="@color/menuButtonBackgroundColor"
+        android:gravity="center"
+        android:text="קצת עלינו"
+        android:textColor="@color/backgroundColor"
+        android:textSize="@dimen/action_bar_text"/>
+
+    <TextView
+        android:id="@+id/textViewAboutUsDialog"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="4"
+        android:background="@color/backgroundColor"
+        android:gravity="center"
+        android:paddingBottom="24dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:text="New Text"
+        android:textColor="@color/actionBar"
+        android:textSize="20dp"/>
+
+    <Button
+        android:id="@+id/buttonBackAboutUsDialog"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_margin="10dp"
+        android:layout_weight="10"
+        android:background="@drawable/custom_menu_button"
+        android:padding="8dp"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:text="חזור"/>
+</LinearLayout>

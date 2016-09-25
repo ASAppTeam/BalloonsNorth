@@ -5,5 +5,7 @@
     <color name="colorAccent">#FF4081</color>
     <color name="backgroundColor">#ffffff</color>
     <color name="actionBar">#dd3344</color>
+    <color name="menuButtonBackgroundColor">#dd3344</color>
+    <color name="menuButtonTextColor">#FFFFFF</color>
 
 </resources>

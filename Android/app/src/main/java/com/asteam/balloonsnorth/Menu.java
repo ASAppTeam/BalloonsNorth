@@ -1,13 +1,15 @@
 package com.asteam.balloonsnorth;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -15,14 +17,29 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import Util.CustomDialogClass;
+import Util.JSONParser;
 import Util.Utils;
 
 public class Menu extends AppCompatActivity {
 
     public static int SCREEN_WIDTH = 0;
     public static int SCREEN_HEIGHT = 0;
-    public static final int SPLASH_DISPLAY_LENGTH = 1500;
+    public static final int SPLASH_DISPLAY_LENGTH = 100;
+    public static final String PHONE_NUMBER = "0528643117";
     public static final String FONTS_NAME_MENU_BUTTONS = "fonts/ankaclm-bold-webfont.ttf";
+    public static final String BASE_URL = "http://asapplicationteam.com/balloons_north/";
+    public static final String ABOUT_US_JSON = "about_us/about_us_json.json";
 
     private Button btnAbout;
     private Button btnWeekSpecials;
@@ -32,6 +49,7 @@ public class Menu extends AppCompatActivity {
     private Button btnPortfolio;
     private Button btnCallUs;
     private ImageButton btnImgFacebook;
+    private TextView dialogTextView;
 
     private ImageView ivSplashImage;
     private View vLinearLayoutMain;
@@ -42,7 +60,7 @@ public class Menu extends AppCompatActivity {
     private LayoutParams params;
     private LinearLayout mainLayout;
     private Button but;
-    boolean click = true;
+    private boolean click = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +71,139 @@ public class Menu extends AppCompatActivity {
     }
 
     private void initialize() {
+
+        findViewByID();
+        getScreenResolution();
+        Utils.showSplashScreen(true, SPLASH_DISPLAY_LENGTH, vLinearLayoutMain, ivSplashImage);
+
+        // Create action bar - START//
+        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.custom_actionbar);
+        View view = getSupportActionBar().getCustomView();
+        // Create action bar - END //
+
+        // Change buttons fonts - START //
+        Utils.changeButtonFont(Menu.this, btnAbout, FONTS_NAME_MENU_BUTTONS);
+        Utils.changeButtonFont(Menu.this, btnWeekSpecials, FONTS_NAME_MENU_BUTTONS);
+        Utils.changeButtonFont(Menu.this, btnOurProducts, FONTS_NAME_MENU_BUTTONS);
+        Utils.changeButtonFont(Menu.this, btnPackages, FONTS_NAME_MENU_BUTTONS);
+        Utils.changeButtonFont(Menu.this, btnPortfolio, FONTS_NAME_MENU_BUTTONS);
+        Utils.changeButtonFont(Menu.this, btnFriendsRecommend, FONTS_NAME_MENU_BUTTONS);
+        Utils.changeButtonFont(Menu.this, btnCallUs, FONTS_NAME_MENU_BUTTONS);
+        // Change buttons fonts - END //
+    }
+
+    // Buttons Listeners -- START //
+    private View.OnClickListener btnAboutListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            // Create custom dialog bar //
+            CustomDialogClass cdc = new CustomDialogClass(Menu.this);
+            cdc.show();
+            Window window = cdc.getWindow();
+            window.setLayout((int) (SCREEN_WIDTH - (SCREEN_WIDTH * 0.2)), (SCREEN_HEIGHT * 2) / 3);
+
+            dialogTextView = (TextView) window.findViewById(R.id.textViewAboutUsDialog);
+
+            // Start Async Task that read the about us data from the server.
+            ReadAboutUsTask readAboutUsTask = new ReadAboutUsTask();
+            readAboutUsTask.execute(BASE_URL + ABOUT_US_JSON);
+        }
+    };
+
+    private View.OnClickListener btnWeekSpecialsListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+            Intent i = new Intent(Menu.this, WeekSpecials.class);
+            startActivity(i);
+        }
+    };
+
+    private View.OnClickListener btnCallUsListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent callIntent = new Intent(Intent.ACTION_DIAL);
+            callIntent.setData(Uri.parse("tel:" + PHONE_NUMBER));
+            startActivity(callIntent);
+        }
+    };
+    private View.OnClickListener btnPackagesListener;
+    private View.OnClickListener btnOurProductsListener;
+    private View.OnClickListener btnFriendsRecommendListener;
+    private View.OnClickListener btnPortfolioListener;
+    private View.OnClickListener btnImgFacebookListener;
+    // Buttons Listeners -- END //
+
+    public class ReadAboutUsTask extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... urls) {
+
+            String result = "";
+            URL url;
+            HttpURLConnection urlConnection = null;
+
+            try {
+                url = new URL(urls[0]);
+
+                urlConnection = (HttpURLConnection) url.openConnection();
+
+                InputStream in = urlConnection.getInputStream();
+
+                InputStreamReader reader = new InputStreamReader(in);
+
+                int data = reader.read();
+
+                while (data != -1) {
+
+                    char current = (char) data;
+
+                    result += current;
+
+                    data = reader.read();
+                }
+                return result;
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            JSONObject temp = null;
+            try {
+                temp = new JSONObject(result);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            Log.i("Menu", "ReadAboutUsTask():onPostExecute(): Result = " + result);
+            try {
+                dialogTextView.setText(JSONParser.getString("about_us_text", temp));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void getScreenResolution() {
+
+        // Get screen resolution.
+        Utils.getScreenSize(this);
+        SCREEN_HEIGHT = Utils.getSCREEN_HEIGHT();
+        SCREEN_WIDTH = Utils.getSCREEN_WIDTH();
+
+        Log.i("Menu", "getScreenResolution(): Done");
+    }
+
+    private void findViewByID() {
 
         // findViewById -- START
         vLinearLayoutMain = findViewById(R.id.linearLayoutMain);
@@ -83,53 +234,7 @@ public class Menu extends AppCompatActivity {
         btnImgFacebook.setOnClickListener(btnImgFacebookListener);
         // findViewById -- END
 
-        // Get screen resolution.
-        Utils.getScreenSize(this);
+        Log.i("Menu", "findViewByID(): Done");
 
-        // Show splash screen
-        Utils.showSplashScreen(true, SPLASH_DISPLAY_LENGTH, vLinearLayoutMain, ivSplashImage);
-
-        // Create action bar - START//
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setDisplayShowCustomEnabled(true);
-        getSupportActionBar().setCustomView(R.layout.custom_actionbar);
-        View view = getSupportActionBar().getCustomView();
-        // Create action bar - END //
-
-        // Change buttons fonts - START //
-        Typeface tf = Typeface.createFromAsset(getAssets(), FONTS_NAME_MENU_BUTTONS);
-        btnAbout.setTypeface(tf);
-        btnWeekSpecials.setTypeface(tf);
-        btnOurProducts.setTypeface(tf);
-        btnPackages.setTypeface(tf);
-        btnPortfolio.setTypeface(tf);
-        btnFriendsRecommend.setTypeface(tf);
-        btnCallUs.setTypeface(tf);
-        // Change buttons fonts - END //
     }
-
-    // Buttons Listeners -- START
-    private View.OnClickListener btnAboutListener;
-    private View.OnClickListener btnWeekSpecialsListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-
-            Intent i = new Intent(Menu.this, WeekSpecials.class);
-            startActivity(i);
-        }
-    };
-    private View.OnClickListener btnPackagesListener;
-    private View.OnClickListener btnOurProductsListener;
-    private View.OnClickListener btnFriendsRecommendListener;
-    private View.OnClickListener btnPortfolioListener;
-    private View.OnClickListener btnCallUsListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent callIntent = new Intent(Intent.ACTION_DIAL);
-            callIntent.setData(Uri.parse("tel:0528643117"));
-            startActivity(callIntent);
-        }
-    };
-    private View.OnClickListener btnImgFacebookListener;
-    // Buttons Listeners -- END
 }

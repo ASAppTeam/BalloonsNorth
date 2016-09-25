@@ -121,9 +121,8 @@
                 android:layout_marginStart="@dimen/menuButtonsMarginStart"
                 android:layout_weight="1"
                 android:background="@drawable/custom_menu_button"
-                android:elevation="10sp"
                 android:text="@string/weekSpecials"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/menuButtonTextColor"
                 android:textSize="25sp"/>
 
             <Button

@@ -15,5 +15,5 @@ $json = json_encode( $postArray );
 $file = 'about_us_json.json';
 // write to file
 //   note: _server_ path, NOT "web address (url)"!
-file_put_contents( $file, $json, FILE_APPEND);
+file_put_contents( $file, $json);
 }

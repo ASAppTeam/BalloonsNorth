@@ -4,20 +4,44 @@
 	<title>About Us</title>
 </head>
 <body>
-	<form name="postform" action="about_us_php.php" method="post" enctype="multipart/form-data">
-		<table class="postarea" id="postarea" align="right">
+	<form name="postform" action="about_us_php.php" method="post" enctype="multipart/form-data"  target="formDestination">
+        <iframe name="formDestination"></iframe>
+		<table class="postarea" id="postarea" align="right" border="1">
 		<tbody align="right">
-		<tr>
-		<td><h2>הכנס כאן את הטקסט עבור "קצת עלינו"</h4></td>
-		</tr>
+			<tr>
+			<td>
+				<h2>&#1492;&#1499;&#1504;&#1505; &#1499;&#1488;&#1503; &#1488;&#1514; &#1492;&#1496;&#1511;&#1505;&#1496; &#1506;&#1489;&#1493;&#1512; "&#1511;&#1510;&#1514; &#1506;&#1500;&#1497;&#1504;&#1493;"</h2>
+			</td>
+			</tr>
+			<tr>  
+				<td>
+					<textarea type="text" name="about_us_text" style="width:300px; height :	300px; text-align: right";>
+					</textarea>
+				</td>
+				<td class="postblock" align="center">:&#1511;&#1510;&#1514; &#1506;&#1500;&#1497;&#1504;&#1493;
+				</td>
+			</tr>
+			<tr>				
+				<td>
+					<input type="submit" value="&#1505;&#1497;&#1497;&#1502;&#1514;&#1497;"  style="width:150px; height:30px;">
+				</td>
+			</tr>
+			<tr>
+			<td>
+					<br><br>
+					<?php
+						$str = file_get_contents('http://asapplicationteam.com/balloons_north/about_us/about_us_json.json');
+						$json = json_decode($str, true); // decode the JSON into an associative array
 
-		<tr>  
-			<td><textarea type="text" name="about_us_text" style="width:300px; height :300px; text-align: right";></textarea></td> <td class="postblock" align="center">:קצת עלינו</td></tr>
-		<tr>
-			<td class="postblock"></td><td> <input type="submit" value="סיימתי"  style="width:150px; height:30px;"> </td></tr>
+						echo '<p>' . print_r($json, true) . '</p>';
+					?>
+				</td>
+				<td class="postblock" align="center">:&#1494;&#1492; &#1492;&#1496;&#1511;&#1505;&#1496; &#1492;&#1511;&#1497;&#1497;&#1501;					
+				</td>
+			</tr>
 		</tbody>
 		</table>
 		</form>
 	</form>
 </body>
-</html>
+</html>	

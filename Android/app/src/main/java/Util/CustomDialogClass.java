@@ -30,6 +30,7 @@ public class CustomDialogClass extends Dialog implements
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.about_us_dialog);
+
         btnBack = (Button) findViewById(R.id.buttonBackAboutUsDialog);
         btnBack.setOnClickListener(this);
     }

@@ -35,11 +35,12 @@ public class Menu extends AppCompatActivity {
 
     public static int SCREEN_WIDTH = 0;
     public static int SCREEN_HEIGHT = 0;
-    public static final int SPLASH_DISPLAY_LENGTH = 100;
+    public static final int SPLASH_DISPLAY_LENGTH = 2000;
     public static final String PHONE_NUMBER = "0528643117";
     public static final String FONTS_NAME_MENU_BUTTONS = "fonts/ankaclm-bold-webfont.ttf";
     public static final String BASE_URL = "http://asapplicationteam.com/balloons_north/";
-    public static final String ABOUT_US_JSON = "about_us/about_us_json.json";
+    public static final String ABOUT_US_JSON_URL = "about_us/about_us_json.json";
+    public static final String SALES_JSON_URL = "sales/sales_json.json";
 
     private Button btnAbout;
     private Button btnWeekSpecials;
@@ -98,17 +99,17 @@ public class Menu extends AppCompatActivity {
     private View.OnClickListener btnAboutListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            // Create custom dialog bar //
+            // Create custom About US dialog bar //
             CustomDialogClass cdc = new CustomDialogClass(Menu.this);
             cdc.show();
             Window window = cdc.getWindow();
-            window.setLayout((int) (SCREEN_WIDTH - (SCREEN_WIDTH * 0.2)), (SCREEN_HEIGHT * 2) / 3);
+            window.setLayout((int) (SCREEN_WIDTH - (SCREEN_WIDTH * 0.2)), (SCREEN_HEIGHT) / 2);
 
             dialogTextView = (TextView) window.findViewById(R.id.textViewAboutUsDialog);
 
             // Start Async Task that read the about us data from the server.
             ReadAboutUsTask readAboutUsTask = new ReadAboutUsTask();
-            readAboutUsTask.execute(BASE_URL + ABOUT_US_JSON);
+            readAboutUsTask.execute(BASE_URL + ABOUT_US_JSON_URL);
         }
     };
 
@@ -136,6 +137,7 @@ public class Menu extends AppCompatActivity {
     private View.OnClickListener btnImgFacebookListener;
     // Buttons Listeners -- END //
 
+    // ReadAboutUsTask - creating connection to the ABOUT_US_JSON_URL, parsing the data and filing the about us popup window.
     public class ReadAboutUsTask extends AsyncTask<String, Void, String> {
 
         @Override

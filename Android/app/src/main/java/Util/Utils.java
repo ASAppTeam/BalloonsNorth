@@ -28,7 +28,7 @@ public class Utils {
 
     public static void showSplashScreen(final boolean show, int splashDisplayLength, final View mainView, final View splashScreen) {
 
-        Log.i("Menu", "showSplashScreen(): " + show);
+        Log.i("Utils", "showSplashScreen(): show: " + show + ", splashDisplayLength: " + splashDisplayLength + ", mainView: " + mainView + ", splashScreen: " + splashScreen);
         mainView.setVisibility(show ? View.GONE : View.VISIBLE);
         splashScreen.setVisibility(show ? View.VISIBLE : View.GONE);
         new Handler().postDelayed(new Runnable() {
@@ -54,6 +54,5 @@ public class Utils {
         Typeface tf = Typeface.createFromAsset(activity.getAssets(), fontName);
         btn.setTypeface(tf);
     }
-
 
 }

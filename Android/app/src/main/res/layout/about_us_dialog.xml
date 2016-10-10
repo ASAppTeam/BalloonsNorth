@@ -4,12 +4,12 @@
               android:layout_height="match_parent"
               android:background="@color/backgroundColor"
               android:orientation="vertical"
-              android:weightSum="24">
+              android:weightSum="14">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="10"
+        android:layout_weight="12"
         android:background="@color/menuButtonBackgroundColor"
         android:gravity="center"
         android:text="קצת עלינו"
@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="4"
+        android:layout_weight="2"
         android:background="@color/backgroundColor"
         android:gravity="center"
         android:paddingBottom="24dp"
@@ -37,10 +37,11 @@
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_margin="10dp"
-        android:layout_weight="10"
+        android:layout_weight="0"
         android:background="@drawable/custom_menu_button"
         android:padding="8dp"
         android:paddingBottom="8dp"
         android:paddingTop="8dp"
-        android:text="חזור"/>
+        android:text="חזור"
+        android:visibility="gone"/>
 </LinearLayout>

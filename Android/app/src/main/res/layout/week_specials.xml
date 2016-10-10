@@ -5,12 +5,24 @@
     android:layout_height="match_parent"
     >
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv"
+    <ImageView
+        android:id="@+id/imageViewSplashImage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"
-        android:background="#ffffff"
-        >
-    </android.support.v7.widget.RecyclerView>
+        android:contentDescription="@string/splashScreen"
+        android:src="@mipmap/splash_img"/>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayoutMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#ffffff"
+            >
+        </android.support.v7.widget.RecyclerView>
+    </RelativeLayout>
 </RelativeLayout>

@@ -8,6 +8,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 /**
  * Created by Amit on 9/14/2016.
@@ -42,6 +43,22 @@ public class Utils {
         Log.i("Utils", "showSplashScreen(): Done");
     }
 
+    public static void showProgressBar(final boolean show, int progressBarDisplayLength, final View mainView, final View ProgressBar) {
+
+        Log.i("Utils", "showProgressBar(): show: " + show + ", splashDisplayLength: " + progressBarDisplayLength + ", mainView: " + mainView + ", splashScreen: " + ProgressBar);
+        mainView.setVisibility(show ? View.GONE : View.VISIBLE);
+        ProgressBar.setVisibility(show ? View.VISIBLE : View.GONE);
+        new Handler().postDelayed(new Runnable() {
+            public void run() {
+                ProgressBar.setVisibility(show ? View.GONE : View.VISIBLE);
+                mainView.setVisibility(show ? View.VISIBLE
+                        : View.GONE);
+            }
+        }, progressBarDisplayLength);
+
+        Log.i("Utils", "showProgressBar(): Done");
+    }
+
     public static int getSCREEN_WIDTH() {
         return SCREEN_WIDTH;
     }
@@ -50,9 +67,14 @@ public class Utils {
         return SCREEN_HEIGHT;
     }
 
-    public static void changeButtonFont(Activity activity, Button btn, String fontName) {
+    public static void changeFont(Activity activity, Button btn, String fontName) {
         Typeface tf = Typeface.createFromAsset(activity.getAssets(), fontName);
         btn.setTypeface(tf);
+    }
+
+    public static void changeFont(Activity activity, TextView textView, String fontName) {
+        Typeface tf = Typeface.createFromAsset(activity.getAssets(), fontName);
+        textView.setTypeface(tf);
     }
 
 }

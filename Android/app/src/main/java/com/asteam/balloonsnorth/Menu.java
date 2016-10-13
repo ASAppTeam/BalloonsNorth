@@ -37,7 +37,8 @@ public class Menu extends AppCompatActivity {
     public static int SCREEN_HEIGHT = 0;
     public static final int SPLASH_DISPLAY_LENGTH = 2000;
     public static final String PHONE_NUMBER = "0528643117";
-    public static final String FONTS_NAME_MENU_BUTTONS = "fonts/ankaclm-bold-webfont.ttf";
+    //public static final String FONTS_ROBOTO_REGULAR_TTF = "fonts/ankaclm-bold-webfont.ttf";
+    public static final String FONTS_ROBOTO_REGULAR_TTF = "fonts/roboto_regular.ttf";
     public static final String BASE_URL = "http://asapplicationteam.com/balloons_north/";
     public static final String ABOUT_US_JSON_URL = "about_us/about_us_json.json";
     public static final String SALES_JSON_URL = "sales/sales_json.json";
@@ -50,7 +51,7 @@ public class Menu extends AppCompatActivity {
     private Button btnPortfolio;
     private Button btnCallUs;
     private ImageButton btnImgFacebook;
-    private TextView dialogTextView;
+    private TextView tvAboutUs;
 
     private ImageView ivSplashImage;
     private View vLinearLayoutMain;
@@ -62,6 +63,7 @@ public class Menu extends AppCompatActivity {
     private LinearLayout mainLayout;
     private Button but;
     private boolean click = true;
+    private String about_us = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,31 +87,33 @@ public class Menu extends AppCompatActivity {
         // Create action bar - END //
 
         // Change buttons fonts - START //
-        Utils.changeButtonFont(Menu.this, btnAbout, FONTS_NAME_MENU_BUTTONS);
-        Utils.changeButtonFont(Menu.this, btnWeekSpecials, FONTS_NAME_MENU_BUTTONS);
-        Utils.changeButtonFont(Menu.this, btnOurProducts, FONTS_NAME_MENU_BUTTONS);
-        Utils.changeButtonFont(Menu.this, btnPackages, FONTS_NAME_MENU_BUTTONS);
-        Utils.changeButtonFont(Menu.this, btnPortfolio, FONTS_NAME_MENU_BUTTONS);
-        Utils.changeButtonFont(Menu.this, btnFriendsRecommend, FONTS_NAME_MENU_BUTTONS);
-        Utils.changeButtonFont(Menu.this, btnCallUs, FONTS_NAME_MENU_BUTTONS);
+        Utils.changeFont(Menu.this, btnAbout, FONTS_ROBOTO_REGULAR_TTF);
+        Utils.changeFont(Menu.this, btnWeekSpecials, FONTS_ROBOTO_REGULAR_TTF);
+        Utils.changeFont(Menu.this, btnOurProducts, FONTS_ROBOTO_REGULAR_TTF);
+        Utils.changeFont(Menu.this, btnPackages, FONTS_ROBOTO_REGULAR_TTF);
+        Utils.changeFont(Menu.this, btnPortfolio, FONTS_ROBOTO_REGULAR_TTF);
+        Utils.changeFont(Menu.this, btnFriendsRecommend, FONTS_ROBOTO_REGULAR_TTF);
+        Utils.changeFont(Menu.this, btnCallUs, FONTS_ROBOTO_REGULAR_TTF);
         // Change buttons fonts - END //
+
+        // Start Async Task that read the about us data from the server.
+        ReadAboutUsTask readAboutUsTask = new ReadAboutUsTask();
+        readAboutUsTask.execute(BASE_URL + ABOUT_US_JSON_URL);
     }
 
     // Buttons Listeners -- START //
     private View.OnClickListener btnAboutListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
+
             // Create custom About US dialog bar //
             CustomDialogClass cdc = new CustomDialogClass(Menu.this);
             cdc.show();
             Window window = cdc.getWindow();
             window.setLayout((int) (SCREEN_WIDTH - (SCREEN_WIDTH * 0.2)), (SCREEN_HEIGHT) / 2);
 
-            dialogTextView = (TextView) window.findViewById(R.id.textViewAboutUsDialog);
-
-            // Start Async Task that read the about us data from the server.
-            ReadAboutUsTask readAboutUsTask = new ReadAboutUsTask();
-            readAboutUsTask.execute(BASE_URL + ABOUT_US_JSON_URL);
+            tvAboutUs = (TextView) window.findViewById(R.id.textViewAboutUsDialog);
+            tvAboutUs.setText(about_us);
         }
     };
 
@@ -188,7 +192,8 @@ public class Menu extends AppCompatActivity {
             }
             Log.i("Menu", "ReadAboutUsTask():onPostExecute(): Result = " + result);
             try {
-                dialogTextView.setText(JSONParser.getString("about_us_text", temp));
+
+                about_us = JSONParser.getString("about_us_text", temp);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -234,9 +239,10 @@ public class Menu extends AppCompatActivity {
 
         btnImgFacebook = (ImageButton) findViewById(R.id.btnImgFacebook);
         btnImgFacebook.setOnClickListener(btnImgFacebookListener);
+
+
         // findViewById -- END
 
         Log.i("Menu", "findViewByID(): Done");
-
     }
 }

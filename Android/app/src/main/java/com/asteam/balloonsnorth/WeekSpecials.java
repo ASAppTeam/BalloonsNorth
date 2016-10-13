@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,6 +31,8 @@ import Util.Utils;
 public class WeekSpecials extends AppCompatActivity {
 
     public static final int AMOUNT_OF_SALES = 4;
+    public static final String FONTS_NAME_SALES = "fonts/roboto_regular.ttf";
+
     private List<Sale> Sales = new ArrayList<>();
     private RecyclerView rv;
     public ArrayList salesHeadlines = new ArrayList();
@@ -37,41 +40,39 @@ public class WeekSpecials extends AppCompatActivity {
 
     private ImageView ivSplashImage;
     private View vRelativeLayoutMain;
+    private TextView tvSaleName;
+    private TextView tvSaleDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.week_specials);
 
-        vRelativeLayoutMain = findViewById(R.id.relativeLayoutMain);
-        ivSplashImage = (ImageView) findViewById(R.id.imageViewSplashImage);
-
-        rv = (RecyclerView) findViewById(R.id.rv);
-
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        rv.setLayoutManager(llm);
-        rv.setHasFixedSize(true);
-
-        ReadSalesTask readSalesTask = new ReadSalesTask();
-        readSalesTask.execute(Menu.BASE_URL + Menu.SALES_JSON_URL);
-
-        Utils.showSplashScreen(true, Menu.SPLASH_DISPLAY_LENGTH, vRelativeLayoutMain, ivSplashImage);
-
+        findViewByID();
         initializeAdapter();
-
         initialize();
     }
 
     private void initialize() {
 
-        // Create action bar - START//
         Log.i("WeekSpecials", "initialize(): START");
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        rv.setLayoutManager(llm);
+        rv.setHasFixedSize(true);
+
+        // Start AsyncTask that loads and show the data from the server //
+        ReadSalesTask readSalesTask = new ReadSalesTask();
+        readSalesTask.execute(Menu.BASE_URL + Menu.SALES_JSON_URL);
+
+        // Show splash screen while the sales are loading from the server //
+        Utils.showSplashScreen(true, Menu.SPLASH_DISPLAY_LENGTH, vRelativeLayoutMain, ivSplashImage);
+
+        // Create action bar - START //
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.custom_actionbar);
         View view = getSupportActionBar().getCustomView();
         // Create action bar - END //
-
     }
 
     public class ReadSalesTask extends AsyncTask<String, Void, String> {
@@ -150,5 +151,21 @@ public class WeekSpecials extends AppCompatActivity {
         Log.i("WeekSpecials", "initializeAdapter(): START");
         RVAdapter adapter = new RVAdapter(Sales);
         rv.setAdapter(adapter);
+    }
+
+    private void findViewByID() {
+
+        // findViewById -- START
+        vRelativeLayoutMain = findViewById(R.id.relativeLayoutMain);
+
+        ivSplashImage = (ImageView) findViewById(R.id.imageViewSplashImage);
+
+        rv = (RecyclerView) findViewById(R.id.rv);
+
+        tvSaleDescription = (TextView) findViewById(R.id.saleDescription);
+        tvSaleName = (TextView) findViewById(R.id.saleName);
+        // findViewById -- END
+
+        Log.i("WeekSpecials", "findViewByID(): Done");
     }
 }

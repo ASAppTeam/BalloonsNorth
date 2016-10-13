@@ -8,6 +8,9 @@
     <dimen name="menuButtonsMarginStart">5dp</dimen>
     <dimen name="menuButtonsMarginEnd">5dp</dimen>
     <dimen name="menuLinearMargin">5dp</dimen>
+    <dimen name="TextSizeAapBarMediumTitle">20sp</dimen>
+    <dimen name="TextSizeSubheadingRegular">16sp</dimen>
+    <dimen name="TextSizeBodyRegular">14sp</dimen>
     <!--> Menu Screen values - End<-->
 
 

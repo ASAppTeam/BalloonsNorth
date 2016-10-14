@@ -2,46 +2,82 @@
 <html>
 <head>
 	<title>About Us</title>
+	<meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style type="text/css">
+            * {
+                font-family: Ariel, Tahoma;
+                font-size: 13pt;
+                color: #333333;
+            }
+            
+            h1
+            {
+                font-size: 90%;
+                color: indigo;
+            }
+            
+            h2
+            {
+                font-size: 150%;
+            }
+            
+            .form_caption
+            {
+                background-color: #dfdfdf;
+                text-align: center;
+            }
+            .td_alignment
+            {
+            	text-align: center;
+            	align-items: center;
+            	align-self: center;
+            	alignment-baseline: central;
+            	align-content: center;
+            	background-color: #f0f0f0;
+            }
+        </style>
 </head>
 <body>
-	<form name="postform" action="about_us_php.php" method="post" enctype="multipart/form-data"  target="formDestination">
-        <iframe name="formDestination"></iframe>
-		<table class="postarea" id="postarea" align="right" border="1">
-		<tbody align="right">
+	<table class="postarea" id="postarea" width="50%" border="1" align="center">
+		<tr>
 			<tr>
-			<td>
-				<h2>&#1492;&#1499;&#1504;&#1505; &#1499;&#1488;&#1503; &#1488;&#1514; &#1492;&#1496;&#1511;&#1505;&#1496; &#1506;&#1489;&#1493;&#1512; "&#1511;&#1510;&#1514; &#1506;&#1500;&#1497;&#1504;&#1493;"</h2>
-			</td>
-			</tr>
+            	<td>
+               		<!-- Header1 starts here -->
+              		<table width="100%">
+                  		<tr>
+                           	<td align="center" style="font-weight:bold;" class="form_caption">
+                            		<h2>הכנס כאן את הטקסט עבור "קצת עלינו"</h2>
+                       		</td>                   		
+                        </tr>    
+                   	</table>
+                   	<!-- Header1 ends here -->
+               	</td>
+           	</tr>
+           	<tr>
+           		<td>
+           			<!-- Content starts here -->
+           			<table width="100%" border="1" cellpadding="5">
+						<form name="postform" action="about_us_php.php" method="post" enctype="multipart/form-data"  target="formDestination">
+        			<iframe name="formDestination" width="50px" height="50px" style="visibility:hidden"></iframe>
 			<tr>  
-				<td>
-					<textarea type="text" name="about_us_text" style="width:300px; height :	300px; text-align: right";>
+				<td align="center">
+					<textarea type="text" name="about_us_text" style="width:300px; height:300px; text-align: right";>
 					</textarea>
 				</td>
-				<td class="postblock" align="center">:&#1511;&#1510;&#1514; &#1506;&#1500;&#1497;&#1504;&#1493;
+				<td class="postblock" align="center" rowspan="2">:&#1511;&#1510;&#1514; &#1506;&#1500;&#1497;&#1504;&#1493;
 				</td>
 			</tr>
-			<tr>				
-				<td>
+			<tr>
+				<td align="center">
 					<input type="submit" value="&#1505;&#1497;&#1497;&#1502;&#1514;&#1497;"  style="width:150px; height:30px;">
 				</td>
 			</tr>
-			<tr>
-			<td>
-					<br><br>
-					<?php
-						$str = file_get_contents('http://asapplicationteam.com/balloons_north/about_us/about_us_json.json');
-						$json = json_decode($str, true); // decode the JSON into an associative array
-
-						echo '<p>' . print_r($json, true) . '</p>';
-					?>
-				</td>
-				<td class="postblock" align="center">:&#1494;&#1492; &#1492;&#1496;&#1511;&#1505;&#1496; &#1492;&#1511;&#1497;&#1497;&#1501;					
+						</form>
+					</table>
 				</td>
 			</tr>
-		</tbody>
-		</table>
-		</form>
-	</form>
+		</tr>
+	</table>
 </body>
 </html>	
